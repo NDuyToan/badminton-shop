@@ -11,3 +11,9 @@ environment-info:
     - 'echo "Working directory: $(pwd)"'
     - 'echo "Files:"'
     - ls -la
+
+node-info:
+  state: test
+  script:
+    - node --version
+    - npm --version
