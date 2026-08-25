@@ -24,12 +24,12 @@ build-api:
   stage: build
   script:
     - cd apps/api
-    - npm install
+    - npm ci
     - npm run build
 
 build-admin:
   stage: build
   script:
     - cd apps/admin
-    - npm install
+    - npm ci
     - npm run build
