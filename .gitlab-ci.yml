@@ -1,5 +1,6 @@
 stages:
   - test
+  - deploy
 
 hello-ci:
   stage: test
@@ -7,3 +8,6 @@ hello-ci:
     - echo "Hello from GitLab CI!"
     - echo "Current branch $CI_COMMIT_BRANCH"
     - echo "Pipeline ID $CI_PIPELINE_ID"
+  stage: deploy
+  script: 
+   - echo "sang step 2"
