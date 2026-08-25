@@ -1,0 +1,9 @@
+stages:
+  - test
+
+hello-ci:
+  stage: test
+  script:
+    - echo "Hello from GitLab CI!"
+    - echo "Current branch: $CI_COMMIT_BRANCH"
+    - echo "Pipeline ID: $CI_PIPELINE_ID"
