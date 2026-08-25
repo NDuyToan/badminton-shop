@@ -1,6 +1,7 @@
 image: node:22
 stages:
   - test
+  - build
 
 environment-info:
   stage: test
@@ -18,3 +19,10 @@ node-info:
   script:
     - node --version
     - npm --version
+
+build-api:
+  stage: build
+  script:
+    - cd apps/api
+    - npm install
+    - npm run build
