@@ -2,6 +2,7 @@ image: node:22
 stages:
   - test
   - build
+  - verify
 
 variables:
   NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"
@@ -37,6 +38,9 @@ build-api:
     - cd apps/api
     - npm ci --prefer-offline
     - npm run build
+  artifacts:
+    paths:
+      - apps/api/dist
 
 build-admin:
   stage: build
@@ -44,3 +48,12 @@ build-admin:
     - cd apps/admin
     - npm ci --prefer-offline
     - npm run build
+
+verify-api-artifacts:
+  stage: verify
+  needs:
+    - job: build-api
+      artifacts: true
+  script:
+    - echo "Checking API artifacts"
+    - ls -la apps/api/dist
