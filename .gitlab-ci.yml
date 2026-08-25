@@ -3,6 +3,14 @@ stages:
   - test
   - build
 
+cache:
+  key:
+    files:
+      - apps/api/package-lock.json
+      - apps/admin/package-lock.json
+  paths:
+    - .npm/
+
 environment-info:
   stage: test
   script:
@@ -24,12 +32,12 @@ build-api:
   stage: build
   script:
     - cd apps/api
-    - npm ci
+    - npm ci --cache ../../.npm --prefer-offline
     - npm run build
 
 build-admin:
   stage: build
   script:
     - cd apps/admin
-    - npm ci
+    - npm ci --cache ../../.npm --prefer-offline
     - npm run build
