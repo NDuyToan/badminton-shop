@@ -13,7 +13,7 @@ environment-info:
     - ls -la
 
 node-info:
-  state: test
+  stage: test
   script:
     - node --version
     - npm --version
