@@ -1,13 +1,13 @@
 stages:
   - test
-  - deploy
 
-hello-ci:
+environment-info:
   stage: test
   script:
-    - echo "Hello from GitLab CI!"
-    - echo "Current branch $CI_COMMIT_BRANCH"
-    - echo "Pipeline ID $CI_PIPELINE_ID"
-  stage: deploy
-  script: 
-   - echo "sang step 2"
+    - 'echo "Hello from GitLab CI!"'
+    - 'echo "Branch: $CI_COMMIT_BRANCH"'
+    - 'echo "Pipeline ID: $CI_PIPELINE_ID"'
+    - 'echo "Project: $CI_PROJECT_NAME"'
+    - 'echo "Working directory: $(pwd)"'
+    - 'echo "Files:"'
+    - ls -la
