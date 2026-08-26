@@ -1,14 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import { Category } from '../types/category.type';
-import { categoryApi } from '../api/category.api';
+import { useCallback, useEffect, useState } from "react";
+
+import { Category } from "../types/category.type";
+import { categoryApi } from "../api/category.api";
 
 export function CategoryList() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  // TODO: use tanstack query later
   const fetchCategories = useCallback(async () => {
     setIsLoading(true);
     setError(null);
@@ -16,7 +18,8 @@ export function CategoryList() {
       const data = await categoryApi.getCategories();
       setCategories(data);
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to load categories';
+      const message =
+        err instanceof Error ? err.message : "Failed to load categories";
       setError(message);
     } finally {
       setIsLoading(false);
@@ -24,18 +27,33 @@ export function CategoryList() {
   }, []);
 
   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await categoryApi.getCategories();
+
+        setCategories(data);
+      } catch (err) {
+        const message =
+          err instanceof Error ? err.message : "Failed to load categories";
+
+        setError(message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     fetchCategories();
-  }, [fetchCategories]);
+  }, []);
 
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString);
-      return new Intl.DateTimeFormat('vi-VN', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
+      return new Intl.DateTimeFormat("vi-VN", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
       }).format(date);
     } catch {
       return dateString;
@@ -61,7 +79,7 @@ export function CategoryList() {
             className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3.5 py-2 text-sm font-medium text-zinc-700 shadow-xs hover:bg-zinc-50 hover:text-zinc-900 disabled:opacity-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-100 cursor-pointer transition-colors"
           >
             <svg
-              className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`}
+              className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -108,7 +126,10 @@ export function CategoryList() {
             {/* Table Skeleton */}
             <div className="mt-6 divide-y divide-zinc-100 dark:divide-zinc-800/60">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="flex items-center justify-between p-4 animate-pulse">
+                <div
+                  key={i}
+                  className="flex items-center justify-between p-4 animate-pulse"
+                >
                   <div className="h-4 w-12 bg-zinc-200 dark:bg-zinc-800 rounded"></div>
                   <div className="h-4 w-32 bg-zinc-200 dark:bg-zinc-800 rounded"></div>
                   <div className="h-4 w-24 bg-zinc-200 dark:bg-zinc-800 rounded"></div>
@@ -125,7 +146,12 @@ export function CategoryList() {
         {!isLoading && error && (
           <div className="p-8 text-center">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400">
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -156,7 +182,12 @@ export function CategoryList() {
         {!isLoading && !error && categories.length === 0 && (
           <div className="p-12 text-center">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-zinc-100 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500">
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"

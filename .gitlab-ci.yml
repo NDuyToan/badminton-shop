@@ -41,6 +41,7 @@ build-api:
   artifacts:
     paths:
       - apps/api/dist
+    expire_in: 1 day
 
 build-admin:
   stage: build

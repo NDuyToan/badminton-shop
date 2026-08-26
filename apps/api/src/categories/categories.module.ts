@@ -6,4 +6,4 @@ import { Module } from '@nestjs/common';
   controllers: [CategoriesClass],
   providers: [CategoriesService],
 })
-export class CategoriesModule { }
+export class CategoriesModule {}
