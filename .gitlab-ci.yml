@@ -1,6 +1,6 @@
 image: node:22
 stages:
-  - test
+  - quality
   - build
   - verify
 
@@ -15,22 +15,19 @@ cache:
   paths:
     - .npm/
 
-environment-info:
-  stage: test
+lint-api:
+  stage: quality
   script:
-    - 'echo "Hello from GitLab CI!"'
-    - 'echo "Branch: $CI_COMMIT_BRANCH"'
-    - 'echo "Pipeline ID: $CI_PIPELINE_ID"'
-    - 'echo "Project: $CI_PROJECT_NAME"'
-    - 'echo "Working directory: $(pwd)"'
-    - 'echo "Files:"'
-    - ls -la
+    - cd apps/api
+    - npm ci --prefer-offline
+    - npm run lint
 
-node-info:
-  stage: test
+lint-admin:
+  stage: quality
   script:
-    - node --version
-    - npm --version
+    - cd apps/admin
+    - npm ci --prefer-offline
+    - npm run lint
 
 build-api:
   stage: build
