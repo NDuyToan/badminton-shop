@@ -1,6 +1,7 @@
 image: node:22
 stages:
   - quality
+  - test
   - build
   - verify
 
@@ -28,6 +29,13 @@ lint-admin:
     - cd apps/admin
     - npm ci --prefer-offline
     - npm run lint
+
+test-api:
+  stage: test
+  script:
+    - cd apps/api
+    - npm ci --prefer-offline
+    - npm run test
 
 build-api:
   stage: build
