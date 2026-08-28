@@ -1,33 +1,52 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from 'src/generated/prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+
+export const userSafeSelect = {
+  id: true,
+  email: true,
+  fullname: true,
+  address: true,
+  role: true,
+  status: true,
+  createdAt: true,
+  updatedAt: true,
+} satisfies Prisma.UserSelect;
 
 @Injectable()
 export class UsersService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  findAll() {
+  async create(data: Prisma.UserCreateInput) {
+    return this.prismaService.user.create({
+      data,
+      select: userSafeSelect,
+    });
+  }
+
+  async findAll() {
     return this.prismaService.user.findMany({
+      select: userSafeSelect,
       orderBy: {
         createdAt: 'desc',
       },
     });
   }
 
-  findById(id: number) {
+  async findById(id: number) {
     return this.prismaService.user.findUnique({
       where: {
         id,
       },
+      select: userSafeSelect,
     });
   }
 
   async findByEmail(email: string) {
-    const user = await this.prismaService.user.findUnique({
+    return this.prismaService.user.findUnique({
       where: {
         email,
       },
     });
-
-    return user;
   }
 }

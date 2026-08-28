@@ -1,8 +1,6 @@
 import {
-  IsDate,
   IsEmail,
   IsNotEmpty,
-  IsOptional,
   IsString,
   MaxLength,
   MinLength,
@@ -39,12 +37,4 @@ export class RegisterDto {
   @IsString({ message: 'Address must be a string' })
   @MaxLength(255, { message: 'Address cannot exceed 255 characters' })
   address!: string;
-
-  @IsOptional()
-  @IsDate({ message: 'createdAt must be a valid Date' })
-  createdAt?: Date;
-
-  @IsOptional()
-  @IsDate({ message: 'updatedAt must be a valid Date' })
-  updatedAt?: Date;
 }

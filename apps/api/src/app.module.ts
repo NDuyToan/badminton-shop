@@ -1,11 +1,10 @@
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
+import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { PrismaModule } from './prisma/prisma.module';
-import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './auth/auth.module';
-import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -17,6 +16,6 @@ import { UsersModule } from './users/users.module';
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UsersService],
+  providers: [AppService],
 })
 export class AppModule {}
