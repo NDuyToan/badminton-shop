@@ -1,9 +1,9 @@
 import {
   ConflictException,
   Injectable,
-  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 import { RegisterDto } from './dto/register.dto';
 import { UsersService } from 'src/users/users.service';
@@ -12,7 +12,10 @@ import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async register(registerDto: RegisterDto) {
     const { email, password, fullname, address } = registerDto;
@@ -42,7 +45,11 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
 
     if (!user) {
-      throw new NotFoundException('Email or password not match');
+      throw new UnauthorizedException('Email or password not match');
+    }
+
+    if (user.status === 'IN_ACTIVE') {
+      throw new UnauthorizedException('Account is inactive');
     }
 
     const isMatchPassword = await this.verifyPassword(
@@ -54,6 +61,19 @@ export class AuthService {
       throw new UnauthorizedException('Email or password not match');
     }
 
-    return user;
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    const accessToken = await this.jwtService.signAsync(payload);
+
+    const { passwordHash: _, ...safeUser } = user;
+
+    return {
+      accessToken,
+      user: safeUser,
+    };
   }
 }
