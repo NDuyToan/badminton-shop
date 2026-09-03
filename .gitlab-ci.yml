@@ -1,0 +1,65 @@
+image: node:22
+stages:
+  - quality
+  - test
+  - build
+  - verify
+
+variables:
+  NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"
+
+cache:
+  key:
+    files:
+      - apps/api/package-lock.json
+      - apps/admin/package-lock.json
+  paths:
+    - .npm/
+
+lint-api:
+  stage: quality
+  script:
+    - cd apps/api
+    - npm ci --prefer-offline
+    - npm run lint
+
+lint-admin:
+  stage: quality
+  script:
+    - cd apps/admin
+    - npm ci --prefer-offline
+    - npm run lint
+
+test-api:
+  stage: test
+  script:
+    - cd apps/api
+    - npm ci --prefer-offline
+    - npm run test
+
+build-api:
+  stage: build
+  script:
+    - cd apps/api
+    - npm ci --prefer-offline
+    - npm run build
+  artifacts:
+    paths:
+      - apps/api/dist
+    expire_in: 1 day
+
+build-admin:
+  stage: build
+  script:
+    - cd apps/admin
+    - npm ci --prefer-offline
+    - npm run build
+
+verify-api-artifacts:
+  stage: verify
+  needs:
+    - job: build-api
+      artifacts: true
+  script:
+    - echo "Checking API artifacts"
+    - ls -la apps/api/dist
