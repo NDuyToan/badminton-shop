@@ -16,7 +16,7 @@
 
 | Hạng mục lớn | Tổng số tính năng | Đã hoàn thành | Tiến độ | Trạng thái hiện tại |
 | :--- | :---: | :---: | :---: | :--- |
-| **1. Backend Core & Database** | 12 modules | 3 / 12 | 25% | Đã có Auth cơ bản, User, Category. Cần bổ sung Product, Variant, Order, Cart, Prisma migration |
+| **1. Backend Core & Database** | 12 modules | 4 / 12 | 33% | Đã hoàn thành toàn bộ Database Schema & Migration (Category, Brand, Product, Specs, Variant, Cart, Order, Coupon, Banner, Post). Đã có Auth cơ bản, User, Category. |
 | **2. Admin Portal** | 8 modules | 1 / 8 | 12.5% | Đã có Auth login cơ bản, CRUD Category. Cần Product CRUD, Variants, Orders |
 | **3. Client Storefront** | 10 modules | 0 / 10 | 0% | Đang ở template mặc định ban đầu. Cần làm Header Mega Menu, Homepage, Catalog, Detail, Checkout |
 | **4. DevOps & Deployment** | 4 tasks | 1 / 4 | 25% | Đã có Docker Compose & PM2 ecosystem cơ bản |
@@ -27,27 +27,18 @@
 
 ### 1.1. Database Schema & Prisma ORM
 - [x] **Category Model**: Quản lý danh mục cơ bản (id, name, slug, description, status). *(Status: DONE)*
-- [x] **User Model & Role Enum**: Quản lý tài khoản, Role (`ADMIN`, `CUSTOMER`), UserStatus. *(Status: DONE)*
-- [ ] **Category Hierarchy Expansion**: Mở rộng Category thành đa cấp (`parentId`, `imageUrl`, `displayOrder`, `isFeatured`). *(Status: PENDING)*
-- [ ] **Brand Model**: Quản lý thương hiệu (Li-Ning, Victor, Yonex...). *(Status: PENDING)*
-- [ ] **Product Model**: `name`, `slug`, `description`, `originalPrice`, `salePrice`, `categoryId`, `brandId`, `isFeatured`, `isActive`, `tags`. *(Status: PENDING)*
-- [ ] **ProductSpecification Model**: Thông số kỹ thuật đặc thù cầu lông:
-  - Vợt: Cân nặng (`3U`, `4U`, `5U`), Chu vi cán (`G5`, `G6`), Điểm cân bằng (mm), Độ dẻo đũa vợt, Sức căng tối đa (`lbs`/`kg`).
-  - Giày: Form giày, chất liệu đế, công nghệ đệm.
-  *(Status: PENDING)*
-- [ ] **ProductVariant & Attribute Model**:
-  - `sku`, `title` (vd: "4U/G5 - Xanh Chuối", "Size 42 - Đen Cam").
-  - `price`, `stockQuantity`, `color`, `size`, `imageUrl`.
-  *(Status: PENDING)*
-- [ ] **ProductImage Model**: Nhiều ảnh cho 1 sản phẩm, sắp xếp thứ tự hiển thị, ảnh đại diện thumbnail. *(Status: PENDING)*
-- [ ] **Cart & CartItem Model**: Giỏ hàng lưu database cho User đăng nhập. *(Status: PENDING)*
-- [ ] **Order & OrderItem Model**:
-  - `Order`: `orderCode`, `userId?`, `shippingName`, `shippingPhone`, `shippingAddress`, `province`, `district`, `ward`, `paymentMethod`, `paymentStatus`, `orderStatus`, `totalAmount`, `shippingFee`, `note`.
-  - `OrderItem`: Snapshot thông tin sản phẩm và biến thể tại thời điểm đặt hàng.
-  *(Status: PENDING)*
-- [ ] **Coupon / Voucher Model**: Mã giảm giá, % hoặc số tiền cố định, điều kiện đơn tối thiểu, hạn sử dụng. *(Status: PENDING)*
-- [ ] **Post / News Model**: Tin tức cẩm nang, bài viết sự kiện giải đấu. *(Status: PENDING)*
-- [ ] **Banner Model**: Quản lý Slider trang chủ & Banner chiến dịch. *(Status: PENDING)*
+- [x] **User Model & Role Enum**: Quản lý tài khoản, Role (`ADMIN`, `STAFF`, `CUSTOMER`), UserStatus. *(Status: DONE)*
+- [x] **Category Hierarchy Expansion**: Mở rộng Category thành đa cấp (`parentId`, `imageUrl`, `displayOrder`, `isFeatured`). *(Status: DONE)*
+- [x] **Brand Model**: Quản lý thương hiệu (Li-Ning, Victor, Yonex...). *(Status: DONE)*
+- [x] **Product Model**: `name`, `slug`, `description`, `originalPrice`, `salePrice`, `categoryId`, `brandId`, `isFeatured`, `isActive`, `tags`. *(Status: DONE)*
+- [x] **ProductSpecification Model**: Thông số kỹ thuật đặc thù cầu lông (trọng lượng 3U/4U, điểm cân bằng, độ dẻo, sức căng lbs/kg, lối chơi, size giày, chất liệu). *(Status: DONE)*
+- [x] **ProductVariant & Attribute Model**: `sku`, `title`, `price`, `stockQuantity`, `color`, `size`, `imageUrl`. *(Status: DONE)*
+- [x] **ProductImage Model**: Nhiều ảnh cho 1 sản phẩm, sắp xếp thứ tự hiển thị, ảnh đại diện thumbnail. *(Status: DONE)*
+- [x] **Cart & CartItem Model**: Giỏ hàng lưu database cho User đăng nhập và Session. *(Status: DONE)*
+- [x] **Order & OrderItem Model**: `Order` (mã đơn, địa chỉ giao hàng 3 cấp, phương thức COD/VietQR, trạng thái), `OrderItem` (snapshot giá sản phẩm). *(Status: DONE)*
+- [x] **Coupon / Voucher Model**: Mã giảm giá, % hoặc số tiền cố định, điều kiện đơn tối thiểu, hạn sử dụng. *(Status: DONE)*
+- [x] **Post / News Model**: Tin tức cẩm nang, bài viết sự kiện giải đấu. *(Status: DONE)*
+- [x] **Banner Model**: Quản lý Slider trang chủ & Banner chiến dịch. *(Status: DONE)*
 
 ### 1.2. API Modules & Nghiệp vụ (NestJS)
 - [x] **Auth Module**:
@@ -266,3 +257,15 @@
   - So sánh hiện trạng codebase (`apps/api` đã có User/Auth/Category cơ bản; `apps/admin` đã có Category CRUD; `apps/client` chưa triển khai UI).
   - Tạo file đặc tả `docs/PROJECT-SPEC-TRACKER.md` làm kim chỉ nam theo dõi tiến độ chi tiết cho API, Admin và Client.
 - **Tiếp theo**: Cập nhật `apps/api/prisma/schema.prisma` để hỗ trợ Product, Variants, Orders và triển khai migration.
+
+### [2026-09-04] — Hoàn thành Bước 1: Mở rộng Prisma Schema & PostgreSQL Migration
+- **Người thực hiện**: Antigravity AI
+- **Hành động**:
+  - Mở rộng `Category` hỗ trợ self-relation đa cấp (`parentId`), `imageUrl`, `displayOrder`, `isFeatured`.
+  - Bổ sung `Role.STAFF` và `phone` cho `User`.
+  - Tạo mới toàn bộ models: `Brand`, `Product`, `ProductSpecification` (thông số cầu lông & giày), `ProductImage`, `ProductVariant` (SKU, giá, tồn kho), `Cart`, `CartItem`, `Order`, `OrderItem`, `Coupon`, `Banner`, `Post`.
+  - Chạy migration `20260904053911_expand_ecommerce_schema` thành công lên PostgreSQL `badminton_shop`.
+  - Sinh thành công Prisma Client `7.9.1` vào `apps/api/src/generated/prisma`.
+  - Kiểm tra `npm run build` thành công, toàn bộ 27 unit tests đều PASS.
+- **Tiếp theo**: Bước 2 — Xây dựng Products API & Variants API (`apps/api/src/products`) có hỗ trợ bộ lọc đặc thù cầu lông (lối chơi, series, khoảng giá).
+

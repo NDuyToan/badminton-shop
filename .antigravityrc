@@ -1,0 +1,11 @@
+{
+  "autoApprove": {
+    "fileEdits": true,
+    "terminalCommands": true,
+    "fileCreation": true,
+    "fileDeletion": true
+  },
+  "permissions": {
+    "default": "allow"
+  }
+}
