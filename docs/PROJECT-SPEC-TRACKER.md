@@ -16,7 +16,7 @@
 
 | Hạng mục lớn | Tổng số tính năng | Đã hoàn thành | Tiến độ | Trạng thái hiện tại |
 | :--- | :---: | :---: | :---: | :--- |
-| **1. Backend Core & Database** | 12 modules | 4 / 12 | 33% | Đã hoàn thành toàn bộ Database Schema & Migration (Category, Brand, Product, Specs, Variant, Cart, Order, Coupon, Banner, Post). Đã có Auth cơ bản, User, Category. |
+| **1. Backend Core & Database** | 12 modules | 6 / 12 | 50% | Đã hoàn thành Database Schema, Migration, Auth, Users, Categories, Products & Variants API. Đã seed dữ liệu mẫu Li-Ning. |
 | **2. Admin Portal** | 8 modules | 1 / 8 | 12.5% | Đã có Auth login cơ bản, CRUD Category. Cần Product CRUD, Variants, Orders |
 | **3. Client Storefront** | 10 modules | 0 / 10 | 0% | Đang ở template mặc định ban đầu. Cần làm Header Mega Menu, Homepage, Catalog, Detail, Checkout |
 | **4. DevOps & Deployment** | 4 tasks | 1 / 4 | 25% | Đã có Docker Compose & PM2 ecosystem cơ bản |
@@ -54,14 +54,14 @@
   - [x] `GET /categories` (Lấy danh sách danh mục). *(Status: DONE)*
   - [x] `POST /categories`, `PATCH /categories/:id`, `DELETE /categories/:id`. *(Status: DONE)*
   - [ ] `GET /categories/tree` (Lấy cây phân cấp đa cấp phục vụ Mega Menu). *(Status: PENDING)*
-- [ ] **Products Module**:
-  - [ ] `GET /products` (Hỗ trợ lọc đa điều kiện: category, minPrice, maxPrice, brand, sort, paginate). *(Status: PENDING)*
-  - [ ] `GET /products/:slug` (Chi tiết sản phẩm đầy đủ kèm biến thể, ảnh, specs). *(Status: PENDING)*
-  - [ ] `GET /products/featured` (Sản phẩm nổi bật / khuyến mãi hot cho homepage). *(Status: PENDING)*
-  - [ ] `POST /admin/products` (Tạo sản phẩm + biến thể + specs). *(Status: PENDING)*
-  - [ ] `PATCH /admin/products/:id`, `DELETE /admin/products/:id`. *(Status: PENDING)*
-- [ ] **Inventory / Stock Module**:
-  - [ ] `PATCH /admin/variants/:id/stock` (Cập nhật tồn kho). *(Status: PENDING)*
+- [x] **Products Module**:
+  - [x] `GET /products` (Hỗ trợ lọc đa điều kiện: category, minPrice, maxPrice, brand, playStyle, weight, sort, paginate). *(Status: DONE)*
+  - [x] `GET /products/:slug` (Chi tiết sản phẩm đầy đủ kèm biến thể, ảnh, specs). *(Status: DONE)*
+  - [x] `GET /products/featured` (Sản phẩm nổi bật / khuyến mãi hot cho homepage). *(Status: DONE)*
+  - [x] `POST /products` (Tạo sản phẩm + biến thể + specs trong transaction). *(Status: DONE)*
+  - [x] `PATCH /products/:id`, `DELETE /products/:id`. *(Status: DONE)*
+- [x] **Inventory / Stock Module**:
+  - [x] `PATCH /products/variants/:id/stock` (Cập nhật tồn kho biến thể SKU). *(Status: DONE)*
   - [ ] Cảnh báo tồn kho thấp. *(Status: PENDING)*
 - [ ] **Cart Module**:
   - [ ] `GET /cart` (Lấy giỏ hàng hiện tại). *(Status: PENDING)*
@@ -268,4 +268,15 @@
   - Sinh thành công Prisma Client `7.9.1` vào `apps/api/src/generated/prisma`.
   - Kiểm tra `npm run build` thành công, toàn bộ 27 unit tests đều PASS.
 - **Tiếp theo**: Bước 2 — Xây dựng Products API & Variants API (`apps/api/src/products`) có hỗ trợ bộ lọc đặc thù cầu lông (lối chơi, series, khoảng giá).
+
+### [2026-09-04] — Hoàn thành Bước 2: Xây dựng Products API & Variants API
+- **Người thực hiện**: Antigravity AI
+- **Hành động**:
+  - Tạo `ProductsModule` hoàn chỉnh với `ProductsController`, `ProductsService` và các DTOs: `CreateProductDto`, `CreateProductSpecificationDto`, `CreateProductImageDto`, `CreateProductVariantDto`, `UpdateProductDto`, `QueryProductsDto`.
+  - Hỗ trợ endpoint công khai `@Public()`: `GET /products` (lọc theo khoảng giá, lối chơi, trọng lượng 3U/4U, danh mục con, sắp xếp và phân trang), `GET /products/featured` (cho carousel trang chủ), `GET /products/:slug` (chi tiết sản phẩm kèm bộ ảnh gallery, bảng thông số kỹ thuật và các biến thể còn hàng).
+  - Hỗ trợ endpoint quản trị: `POST /products` (tạo nguyên khối trong transaction), `PATCH /products/:id`, `DELETE /products/:id`, `PATCH /products/variants/:variantId/stock`.
+  - Viết bộ unit test `products.service.spec.ts` (9 tests), toàn bộ 6 test suites / 36 tests của `apps/api` đều PASS.
+  - Viết script seed dữ liệu mẫu Li-Ning (`npm run seed`) tạo sẵn 3 sản phẩm biểu tượng (Vợt 3D Calibar 200, Vợt Axforce 80 Chen Long, Giày Halberd ZJ Professional), danh mục con, thương hiệu, banner slider và tin tức.
+- **Tiếp theo**: Bước 3 — Xây dựng giao diện Quản lý Sản phẩm (Product Management) trên Admin Portal (`apps/admin`) kết nối với các API vừa tạo.
+
 
