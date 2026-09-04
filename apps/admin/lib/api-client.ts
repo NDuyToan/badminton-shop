@@ -1,5 +1,19 @@
-const API_BASE_URL =
+const BACKEND_API_URL =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
+export function resolveApiUrl(endpoint: string): string {
+  const cleanEndpoint = endpoint.replace(/^\//, '');
+
+  if (typeof window !== 'undefined') {
+    // In browser: call Next.js BFF proxy route (/api/...)
+    return cleanEndpoint.startsWith('api/')
+      ? `/${cleanEndpoint}`
+      : `/api/${cleanEndpoint}`;
+  }
+
+  // On server (Server Actions / Server Components): call backend directly
+  return `${BACKEND_API_URL.replace(/\/$/, '')}/${cleanEndpoint}`;
+}
 
 export class ApiError extends Error {
   status: number;
@@ -20,7 +34,7 @@ interface RequestOptions extends RequestInit {
 async function request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
   const { params, headers, ...customConfig } = options;
 
-  let url = `${API_BASE_URL.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}`;
+  let url = resolveApiUrl(endpoint);
 
   if (params) {
     const searchParams = new URLSearchParams();
@@ -40,6 +54,7 @@ async function request<T>(endpoint: string, options: RequestOptions = {}): Promi
   };
 
   const config: RequestInit = {
+    credentials: 'same-origin',
     headers: {
       ...defaultHeaders,
       ...headers,
