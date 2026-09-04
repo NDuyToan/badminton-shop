@@ -1,25 +1,26 @@
-import { cookies } from 'next/headers';
-import { Users, PackageCheck } from 'lucide-react';
-import { authApi } from '@/features/auth/api/auth.api';
-import { categoryApi } from '@/features/categories/api/category.api';
-import { Category } from '@/features/categories/types/category.type';
-import { MetricCard } from '@/features/dashboard/components/metric-card';
-import { MonthlyTargetCard } from '@/features/dashboard/components/monthly-target-card';
-import { MonthlySalesChart } from '@/features/dashboard/components/monthly-sales-chart';
-import { StatisticsChart } from '@/features/dashboard/components/statistics-chart';
-import { StoreQuickOverview } from '@/features/dashboard/components/store-quick-overview';
+import { Users, PackageCheck } from "lucide-react";
+import { authApi } from "@/features/auth/api/auth.api";
+import { categoryApi } from "@/features/categories/api/category.api";
+import { Category } from "@/features/categories/types/category.type";
+import { MetricCard } from "@/features/dashboard/components/metric-card";
+import { MonthlyTargetCard } from "@/features/dashboard/components/monthly-target-card";
+import { MonthlySalesChart } from "@/features/dashboard/components/monthly-sales-chart";
+import { StatisticsChart } from "@/features/dashboard/components/statistics-chart";
+import { StoreQuickOverview } from "@/features/dashboard/components/store-quick-overview";
+import { cookies } from "next/headers";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function AdminDashboardPage() {
   const cookieStore = await cookies();
-  const token = cookieStore.get('access_token')?.value;
+  const token = cookieStore.get("access_token")?.value;
 
   let user = null;
   if (token) {
     try {
       user = await authApi.getMe(token);
     } catch {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       user = null;
     }
   }
@@ -31,37 +32,37 @@ export default async function AdminDashboardPage() {
     categories = [
       {
         id: 1,
-        name: 'Vợt cầu lông Yonex',
-        slug: 'vot-cau-long-yonex',
+        name: "Vợt cầu lông Yonex",
+        slug: "vot-cau-long-yonex",
         status: true,
-        description: 'Vợt thi đấu chuyên nghiệp công nghệ Nhật Bản',
+        description: "Vợt thi đấu chuyên nghiệp công nghệ Nhật Bản",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       },
       {
         id: 2,
-        name: 'Vợt cầu lông Victor & Lining',
-        slug: 'vot-victor-lining',
+        name: "Vợt cầu lông Victor & Lining",
+        slug: "vot-victor-lining",
         status: true,
-        description: 'Dòng vợt công thủ toàn diện',
+        description: "Dòng vợt công thủ toàn diện",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       },
       {
         id: 3,
-        name: 'Giày cầu lông giảm chấn',
-        slug: 'giay-cau-long',
+        name: "Giày cầu lông giảm chấn",
+        slug: "giay-cau-long",
         status: true,
-        description: 'Bảo vệ gót và cổ chân tối đa',
+        description: "Bảo vệ gót và cổ chân tối đa",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       },
       {
         id: 4,
-        name: 'Phụ kiện & Quấn cán vợt',
-        slug: 'phu-kien-quan-can',
+        name: "Phụ kiện & Quấn cán vợt",
+        slug: "phu-kien-quan-can",
         status: true,
-        description: 'Cước đan BG65, quấn cán hút mồ hôi',
+        description: "Cước đan BG65, quấn cán hút mồ hôi",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       },

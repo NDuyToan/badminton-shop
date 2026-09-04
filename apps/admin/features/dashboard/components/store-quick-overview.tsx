@@ -1,13 +1,14 @@
-import React from 'react';
-import Link from 'next/link';
-import { FolderTree, Plus, ArrowRight, ShieldCheck, Tag } from 'lucide-react';
-import { Category } from '@/features/categories/types/category.type';
+import Link from "next/link";
+import { FolderTree, ArrowRight, ShieldCheck, Tag } from "lucide-react";
+import { Category } from "@/features/categories/types/category.type";
 
 interface StoreQuickOverviewProps {
   categories?: Category[];
 }
 
-export function StoreQuickOverview({ categories = [] }: StoreQuickOverviewProps) {
+export function StoreQuickOverview({
+  categories = [],
+}: StoreQuickOverviewProps) {
   const activeCategoriesCount = categories.filter((c) => c.status).length;
 
   return (
@@ -28,7 +29,8 @@ export function StoreQuickOverview({ categories = [] }: StoreQuickOverviewProps)
             Quản lý Danh mục sản phẩm
           </h4>
           <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 leading-relaxed">
-            Phân loại vợt cầu lông, giày, quấn cán, túi đựng và các dụng cụ thể thao chính hãng.
+            Phân loại vợt cầu lông, giày, quấn cán, túi đựng và các dụng cụ thể
+            thao chính hãng.
           </p>
         </div>
 
@@ -62,13 +64,18 @@ export function StoreQuickOverview({ categories = [] }: StoreQuickOverviewProps)
             Thương hiệu chủ lực
           </h4>
           <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 leading-relaxed">
-            Yonex, Victor, Lining, Mizuno - Hệ thống tự động đồng bộ giá bán niêm yết và tồn kho.
+            Yonex, Victor, Lining, Mizuno - Hệ thống tự động đồng bộ giá bán
+            niêm yết và tồn kho.
           </p>
         </div>
 
         <div className="mt-5 pt-4 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between">
-          <span className="text-xs text-slate-400 font-medium">Kho hàng miền Bắc & Nam</span>
-          <span className="text-xs font-semibold text-emerald-600">Sẵn sàng 100%</span>
+          <span className="text-xs text-slate-400 font-medium">
+            Kho hàng miền Bắc & Nam
+          </span>
+          <span className="text-xs font-semibold text-emerald-600">
+            Sẵn sàng 100%
+          </span>
         </div>
       </div>
 
@@ -88,13 +95,18 @@ export function StoreQuickOverview({ categories = [] }: StoreQuickOverviewProps)
             Bảo mật & Phân quyền
           </h4>
           <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1 leading-relaxed">
-            Hệ thống xác thực JWT an toàn kết hợp cookie HttpOnly, bảo vệ giao dịch và dữ liệu khách hàng.
+            Hệ thống xác thực JWT an toàn kết hợp cookie HttpOnly, bảo vệ giao
+            dịch và dữ liệu khách hàng.
           </p>
         </div>
 
         <div className="mt-5 pt-4 border-t border-slate-100 dark:border-zinc-800 flex items-center justify-between">
-          <span className="text-xs text-slate-400 font-medium">Phiên bản Admin</span>
-          <span className="text-xs font-bold text-slate-700 dark:text-zinc-300">v2.1 TailAdmin</span>
+          <span className="text-xs text-slate-400 font-medium">
+            Phiên bản Admin
+          </span>
+          <span className="text-xs font-bold text-slate-700 dark:text-zinc-300">
+            v2.1 TailAdmin
+          </span>
         </div>
       </div>
     </div>
