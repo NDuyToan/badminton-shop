@@ -4,9 +4,39 @@ import { PrismaService } from '../prisma/prisma.service';
 import { NotFoundException, ConflictException } from '@nestjs/common';
 import { SortByOption } from './dto/query-products.dto';
 
+interface MockPrismaService {
+  product: {
+    findUnique: jest.Mock;
+    findFirst: jest.Mock;
+    findMany: jest.Mock;
+    count: jest.Mock;
+    create: jest.Mock;
+    update: jest.Mock;
+  };
+  category: {
+    findUnique: jest.Mock;
+  };
+  brand: {
+    findUnique: jest.Mock;
+  };
+  productSpecification: {
+    create: jest.Mock;
+    upsert: jest.Mock;
+  };
+  productImage: {
+    createMany: jest.Mock;
+  };
+  productVariant: {
+    findUnique: jest.Mock;
+    createMany: jest.Mock;
+    update: jest.Mock;
+  };
+  $transaction: jest.Mock;
+}
+
 describe('ProductsService', () => {
   let service: ProductsService;
-  let prisma: any;
+  let prisma: MockPrismaService;
 
   const mockProduct = {
     id: 1,
@@ -84,7 +114,9 @@ describe('ProductsService', () => {
         createMany: jest.fn(),
         update: jest.fn(),
       },
-      $transaction: jest.fn((callback) => callback(prisma)),
+      $transaction: jest.fn((callback: (tx: MockPrismaService) => unknown) =>
+        callback(prisma),
+      ),
     };
 
     const module: TestingModule = await Test.createTestingModule({

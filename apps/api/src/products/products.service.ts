@@ -335,7 +335,7 @@ export class ProductsService {
       }
 
       // Cập nhật thông tin cơ bản
-      const updated = await tx.product.update({
+      await tx.product.update({
         where: { id },
         data: {
           name: dto.name,

@@ -277,6 +277,8 @@
   - Hỗ trợ endpoint quản trị: `POST /products` (tạo nguyên khối trong transaction), `PATCH /products/:id`, `DELETE /products/:id`, `PATCH /products/variants/:variantId/stock`.
   - Viết bộ unit test `products.service.spec.ts` (9 tests), toàn bộ 6 test suites / 36 tests của `apps/api` đều PASS.
   - Viết script seed dữ liệu mẫu Li-Ning (`npm run seed`) tạo sẵn 3 sản phẩm biểu tượng (Vợt 3D Calibar 200, Vợt Axforce 80 Chen Long, Giày Halberd ZJ Professional), danh mục con, thương hiệu, banner slider và tin tức.
+  - Chuẩn hóa TypeScript & ESLint: Đã giải quyết 100% cảnh báo/lỗi lint (`npm run lint` đạt 0 error, 0 warning), `npm run format` và `npm test` (36 tests pass).
 - **Tiếp theo**: Bước 3 — Xây dựng giao diện Quản lý Sản phẩm (Product Management) trên Admin Portal (`apps/admin`) kết nối với các API vừa tạo.
+
 
 
