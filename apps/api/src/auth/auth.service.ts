@@ -22,7 +22,7 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto) {
-    const { email, password, fullname, address } = registerDto;
+    const { email, password, fullname, address, role } = registerDto;
 
     const existingUser = await this.usersService.findByEmail(email);
 
@@ -36,6 +36,7 @@ export class AuthService {
       fullname,
       passwordHash,
       address,
+      ...(role && { role }),
     });
   }
 

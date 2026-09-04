@@ -1,11 +1,14 @@
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
+  IsOptional,
   IsString,
   MaxLength,
   MinLength,
 } from 'class-validator';
 import { Match } from 'src/common/decorators';
+import { UserRole } from 'src/common/enums';
 
 export class RegisterDto {
   @IsNotEmpty({ message: 'Email is required' })
@@ -30,8 +33,9 @@ export class RegisterDto {
   })
   confirmPassword!: string;
 
-  // @IsEnum(UserRole)
-  // role?: UserRole;
+  @IsOptional()
+  @IsEnum(UserRole)
+  role?: UserRole;
 
   @IsNotEmpty({ message: 'Address is required' })
   @IsString({ message: 'Address must be a string' })

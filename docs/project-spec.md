@@ -72,6 +72,7 @@ The project should be intentionally scoped so that the MVP can be completed firs
 - TanStack Query
 - React Hook Form
 - Zod
+- Shadcn UI
 
 ## Backend
 
