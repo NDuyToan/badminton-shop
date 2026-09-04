@@ -278,7 +278,9 @@
   - Viết bộ unit test `products.service.spec.ts` (9 tests), toàn bộ 6 test suites / 36 tests của `apps/api` đều PASS.
   - Viết script seed dữ liệu mẫu Li-Ning (`npm run seed`) tạo sẵn 3 sản phẩm biểu tượng (Vợt 3D Calibar 200, Vợt Axforce 80 Chen Long, Giày Halberd ZJ Professional), danh mục con, thương hiệu, banner slider và tin tức.
   - Chuẩn hóa TypeScript & ESLint: Đã giải quyết 100% cảnh báo/lỗi lint (`npm run lint` đạt 0 error, 0 warning), `npm run format` và `npm test` (36 tests pass).
-- **Tiếp theo**: Bước 3 — Xây dựng giao diện Quản lý Sản phẩm (Product Management) trên Admin Portal (`apps/admin`) kết nối với các API vừa tạo.
+- **Cấu hình UI/UX Intelligence**: Đã tích hợp thành công bộ kỹ năng `nextlevelbuilder/ui-ux-pro-max-skill` vào `.agents/skills/` (gồm 7 skills: `ui-ux-pro-max`, `design`, `design-system`, `ui-styling`, `brand`, `banner-design`, `slides`), đã kiểm tra test query thành công với bộ thông số thiết kế chuẩn thể thao Li-Ning (Red `#DC2626`).
+- **Tiếp theo**: Bước 3 — Xây dựng giao diện Quản lý Sản phẩm (Product Management) trên Admin Portal (`apps/admin`) kết nối với các API vừa tạo, áp dụng các nguyên tắc UI/UX từ `ui-ux-pro-max`.
+
 
 
 
