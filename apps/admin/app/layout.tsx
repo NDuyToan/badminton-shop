@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { cookies } from 'next/headers';
 import './globals.css';
 import { AuthProvider } from '@/features/auth/context/auth-context';
-import { AdminHeader } from '@/features/auth/components/admin-header';
+import { AdminShell } from '@/components/layout/admin-shell';
 import { authApi } from '@/features/auth/api/auth.api';
 import { AuthUser } from '@/features/auth/types/auth.type';
 
@@ -44,11 +44,11 @@ export default async function RootLayout({
     <html
       lang="vi"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-zinc-50/50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
+      <body className="min-h-full bg-slate-50 dark:bg-zinc-950 text-slate-900 dark:text-zinc-100 selection:bg-indigo-500 selection:text-white">
         <AuthProvider initialUser={initialUser}>
-          <AdminHeader />
-          <main className="flex-1 flex flex-col">{children}</main>
+          <AdminShell>{children}</AdminShell>
         </AuthProvider>
       </body>
     </html>

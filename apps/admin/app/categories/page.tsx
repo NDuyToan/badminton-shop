@@ -8,10 +8,8 @@ export const metadata: Metadata = {
 
 export default function AdminCategoriesPage() {
   return (
-    <div className="min-h-screen bg-zinc-50/50 dark:bg-black py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <CategoryList />
-      </div>
+    <div className="max-w-[1600px] mx-auto w-full">
+      <CategoryList />
     </div>
   );
 }
